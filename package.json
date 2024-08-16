@@ -1,0 +1,65 @@
+{
+  "name": "@rootly/backstage-plugin-entity-processor",
+  "version": "1.0.0-beta",
+  "main": "dist/index.cjs.js",
+  "types": "dist/index.d.ts",
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public",
+    "main": "dist/index.cjs.js",
+    "types": "dist/index.d.ts"
+  },
+  "backstage": {
+    "role": "backend-plugin-module",
+    "pluginId": "catalog",
+    "pluginPackage": "rootly-entity-processor"
+  },
+  "homepage": "https://rootly.github.io/backstage-plugin-docs/index.html",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rootlyhqbackstage-plugin-entity-processor.git"
+  },
+  "keywords": [
+    "backstage",
+    "rootly"
+  ],
+  "scripts": {
+    "start": "yarn tsc && backstage-cli package start",
+    "build": "yarn tsc && backstage-cli package build",
+    "lint": "backstage-cli package lint",
+    "test": "backstage-cli package test",
+    "clean": "backstage-cli package clean",
+    "prepack": "backstage-cli package prepack",
+    "postpack": "backstage-cli package postpack"
+  },
+  "dependencies": {
+    "@backstage/backend-common": "^0.23.3",
+    "@backstage/backend-defaults": "^0.4.1",
+    "@backstage/backend-plugin-api": "^0.7.0",
+    "@backstage/catalog-model": "^1.5.0",
+    "@backstage/config": "^1.2.0",
+    "@backstage/plugin-catalog-common": "^1.0.25",
+    "@backstage/plugin-catalog-node": "^1.12.4",
+    "@rjsf/core": "^5.14.3",
+    "@rootly/backstage-plugin-common": "^1.0.0-beta",
+    "node-fetch": "^2.6.7",
+    "winston": "^3.2.1",
+    "yn": "^4.0.0",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@backstage/cli": "^0.26.11",
+    "@types/node": "^20.9.2",
+    "@types/node-fetch": "2.6.11",
+    "@types/supertest": "^2.0.12",
+    "@types/webpack-env": "1.18.4",
+    "jest-mock": "29.7.0",
+    "msw": "^1.0.0",
+    "supertest": "^6.2.4",
+    "typescript": "^4.8.4"
+  },
+  "files": [
+    "dist"
+  ],
+  "packageManager": "yarn@4.4.0"
+}

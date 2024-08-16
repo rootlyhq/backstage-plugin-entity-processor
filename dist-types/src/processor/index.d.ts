@@ -1,0 +1,1 @@
+export { RootlyEntityProcessor } from './RootlyEntityProcessor';
