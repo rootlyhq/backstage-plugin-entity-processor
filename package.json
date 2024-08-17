@@ -1,9 +1,10 @@
 {
   "name": "@rootly/backstage-plugin-entity-processor",
+  "description": "Rootly Catalog processor Backstage",
   "version": "1.0.0-beta",
   "main": "dist/index.cjs.js",
   "types": "dist/index.d.ts",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "publishConfig": {
     "access": "public",
     "main": "dist/index.cjs.js",
@@ -14,13 +15,14 @@
     "pluginId": "catalog",
     "pluginPackage": "rootly-entity-processor"
   },
-  "homepage": "https://rootly.github.io/backstage-plugin-docs/index.html",
+  "homepage": "https://github.com/rootlyhq/backstage-plugin-entity-processor",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rootlyhqbackstage-plugin-entity-processor.git"
+    "url": "https://github.com/rootlyhq/backstage-plugin-entity-processor.git"
   },
   "keywords": [
     "backstage",
+    "plugin",
     "rootly"
   ],
   "scripts": {
