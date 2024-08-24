@@ -11,9 +11,12 @@ import {
 } from '@backstage/plugin-catalog-node';
 import { LocationSpec } from '@backstage/plugin-catalog-common';
 import {
+  ROOTLY_ANNOTATION_FUNCTIONALITY_AUTO_IMPORT,
   ROOTLY_ANNOTATION_FUNCTIONALITY_ID,
   ROOTLY_ANNOTATION_FUNCTIONALITY_SLUG,
   ROOTLY_ANNOTATION_ORG_ID,
+  ROOTLY_ANNOTATION_SERVICE_AUTO_IMPORT,
+  ROOTLY_ANNOTATION_TEAM_AUTO_IMPORT,
   ROOTLY_ANNOTATION_TEAM_ID,
   ROOTLY_ANNOTATION_TEAM_SLUG,
   RootlyApi,
@@ -208,7 +211,7 @@ export class RootlyEntityProcessor implements CatalogProcessor {
       }
     } catch (error) {
       if (error instanceof Error) {
-        if ((error.cause as any).status === 404) {
+        if ((error.cause as any).status === 404 && entity.metadata.annotations?.[ROOTLY_ANNOTATION_SERVICE_AUTO_IMPORT]) {
           rootlyClient.importServiceEntity(entity as RootlyEntity);
         } else {
           emit(processingResult.generalError(location, error.toString()));
@@ -279,7 +282,7 @@ export class RootlyEntityProcessor implements CatalogProcessor {
       }
     } catch (error) {
       if (error instanceof Error) {
-        if ((error.cause as any).status === 404) {
+        if ((error.cause as any).status === 404 && entity.metadata.annotations?.[ROOTLY_ANNOTATION_FUNCTIONALITY_AUTO_IMPORT]) {
           rootlyClient.importFunctionalityEntity(entity as RootlyEntity);
         } else {
           emit(processingResult.generalError(location, error.toString()));
@@ -347,7 +350,7 @@ export class RootlyEntityProcessor implements CatalogProcessor {
       }
     } catch (error) {
       if (error instanceof Error) {
-        if ((error.cause as any).status === 404) {
+        if ((error.cause as any).status === 404 && entity.metadata.annotations?.[ROOTLY_ANNOTATION_TEAM_AUTO_IMPORT]) {
           rootlyClient.importTeamEntity(entity as RootlyEntity);
         } else {
           emit(processingResult.generalError(location, error.toString()));
