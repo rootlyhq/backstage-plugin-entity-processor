@@ -1,6 +1,6 @@
 # Rootly plugin for Backstage
 
-[![npm version](https://badge.fury.io/js/@rootly%2Fbackstage-plugin.svg)](https://badge.fury.io/js/@rootly%2Fbackstage-plugin)
+[![npm version](https://badge.fury.io/js/@rootly%2Fbackstage-plugin-entity-processor.svg)](https://badge.fury.io/js/@rootly%2Fbackstage-plugin-entity-processor)
 [![License](https://img.shields.io/badge/license-MIT-blue)](https://opensource.org/licenses/MIT)
 
 The Rootly plugin is a frontend plugin that displays Rootly services, incidents in Backstage. The plugin includes three components that can be integrated into Backstage:
@@ -60,15 +60,15 @@ to authenticate with Rootly without exposing your API key to users.
 # Rootly single-organization configuration example
 rootly:
   rootly-main: # You can change this
-    apiKey: Bearer ${ROOTLY_API_KEY_MAIN}
+    apiKey: ${ROOTLY_API_KEY_MAIN}
 
 # Rootly multi-organizations example
 rootly:
   rootly-main: # You can change this
     isDefault: true
-    apiKey: Bearer ${ROOTLY_API_KEY_MAIN}
+    apiKey: ${ROOTLY_API_KEY_MAIN}
   rootly-sandbox: # You can change this
-    apiKey: Bearer ${ROOTLY_API_KEY_SANDBOX}
+    apiKey: ${ROOTLY_API_KEY_SANDBOX}
 
 ...
 
