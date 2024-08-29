@@ -10,6 +10,7 @@ var backstagePluginCommon = require('@rootly/backstage-plugin-common');
 
 class RootlyEntityProcessor {
   logger;
+  auth;
   discovery;
   config;
   shouldProcessEntity = (entity) => {
@@ -24,21 +25,23 @@ class RootlyEntityProcessor {
   teamIdAnnotations = (entity) => {
     return entity.metadata.annotations?.[backstagePluginCommon.ROOTLY_ANNOTATION_TEAM_ID] || entity.metadata.annotations?.[backstagePluginCommon.ROOTLY_ANNOTATION_TEAM_SLUG];
   };
-  constructor({ discovery, config, logger }) {
+  constructor({ auth, discovery, config, logger }) {
     this.logger = logger;
+    this.auth = auth;
     this.discovery = discovery;
     this.config = config;
     console.log("RootlyEntityProcessor initialized");
   }
-  useRootlyClient = ({
+  useRootlyClient = async ({
+    auth,
     discovery,
     config,
     organizationId
   }) => {
     const configKeys = config.getConfig("rootly").keys();
-    let token = config.getOptionalString(`rootly.${configKeys.at(0)}.apiKey`);
+    let apiProxyPath = config.getOptionalString(`rootly.${configKeys.at(0)}.proxyPath`);
     if (organizationId) {
-      token = config.getOptionalString(`rootly.${organizationId}.apiKey`);
+      apiProxyPath = config.getOptionalString(`rootly.${organizationId}.proxyPath`);
     } else if (configKeys.length > 1) {
       let defaultOrgId = config.getConfig("rootly").keys().at(0);
       for (const orgId of config.getConfig("rootly").keys()) {
@@ -47,13 +50,17 @@ class RootlyEntityProcessor {
           break;
         }
       }
-      token = config.getOptionalString(`rootly.${defaultOrgId}.apiKey`);
+      apiProxyPath = config.getOptionalString(`rootly.${defaultOrgId}.proxyPath`);
     }
+    const token = auth.getPluginRequestToken({
+      onBehalfOf: await auth.getOwnServiceCredentials(),
+      targetPluginId: "rootly"
+      // e.g. 'catalog'
+    });
     const client = new backstagePluginCommon.RootlyApi({
-      apiProxyPath: discovery.getBaseUrl("proxy"),
-      apiToken: new Promise((resolve) => {
-        resolve({ token });
-      })
+      apiProxyUrl: discovery.getBaseUrl("proxy"),
+      apiProxyPath,
+      apiToken: token
     });
     return client;
   };
@@ -62,7 +69,8 @@ class RootlyEntityProcessor {
   }
   async postProcessEntity(entity, location, emit) {
     if (this.shouldProcessEntity(entity)) {
-      const rootlyClient = this.useRootlyClient({
+      const rootlyClient = await this.useRootlyClient({
+        auth: this.auth,
         discovery: this.discovery,
         config: this.config,
         organizationId: entity.metadata.annotations?.[backstagePluginCommon.ROOTLY_ANNOTATION_ORG_ID]
@@ -125,7 +133,7 @@ class RootlyEntityProcessor {
       }
     } catch (error) {
       if (error instanceof Error) {
-        if (error.cause.status === 404) {
+        if (error.cause.status === 404 && entity.metadata.annotations?.[backstagePluginCommon.ROOTLY_ANNOTATION_SERVICE_AUTO_IMPORT]) {
           rootlyClient.importServiceEntity(entity);
         } else {
           emit(pluginCatalogNode.processingResult.generalError(location, error.toString()));
@@ -177,7 +185,7 @@ class RootlyEntityProcessor {
       }
     } catch (error) {
       if (error instanceof Error) {
-        if (error.cause.status === 404) {
+        if (error.cause.status === 404 && entity.metadata.annotations?.[backstagePluginCommon.ROOTLY_ANNOTATION_FUNCTIONALITY_AUTO_IMPORT]) {
           rootlyClient.importFunctionalityEntity(entity);
         } else {
           emit(pluginCatalogNode.processingResult.generalError(location, error.toString()));
@@ -229,7 +237,7 @@ class RootlyEntityProcessor {
       }
     } catch (error) {
       if (error instanceof Error) {
-        if (error.cause.status === 404) {
+        if (error.cause.status === 404 && entity.metadata.annotations?.[backstagePluginCommon.ROOTLY_ANNOTATION_TEAM_AUTO_IMPORT]) {
           rootlyClient.importTeamEntity(entity);
         } else {
           emit(pluginCatalogNode.processingResult.generalError(location, error.toString()));
@@ -264,12 +272,13 @@ const catalogModuleRootlyReaderProcessor = backendPluginApi.createBackendModule(
     env.registerInit({
       deps: {
         catalog: alpha.catalogProcessingExtensionPoint,
+        auth: backendPluginApi.coreServices.auth,
         discovery: backendPluginApi.coreServices.discovery,
         config: backendPluginApi.coreServices.rootConfig,
         logger: backendPluginApi.coreServices.logger
       },
-      async init({ catalog, discovery, config, logger }) {
-        catalog.addProcessor(new RootlyEntityProcessor({ discovery, config, logger }));
+      async init({ catalog, auth, discovery, config, logger }) {
+        catalog.addProcessor(new RootlyEntityProcessor({ auth, discovery, config, logger }));
       }
     });
   }

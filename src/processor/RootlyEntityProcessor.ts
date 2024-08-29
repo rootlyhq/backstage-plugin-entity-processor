@@ -1,4 +1,5 @@
 import {
+  AuthService,
   DiscoveryService,
   LoggerService,
   RootConfigService,
@@ -35,12 +36,14 @@ export type ShouldProcessEntity = (entity: Entity) => boolean;
 
 export interface RootlyEntityProcessorOptions {
   logger: LoggerService;
+  auth: AuthService;
   discovery: DiscoveryService;
   config: RootConfigService;
 }
 
 export class RootlyEntityProcessor implements CatalogProcessor {
   private logger: LoggerService;
+  private auth: AuthService;
   private discovery: DiscoveryService;
   private config: RootConfigService;
 
@@ -79,28 +82,31 @@ export class RootlyEntityProcessor implements CatalogProcessor {
     );
   };
 
-  constructor({ discovery, config, logger }: RootlyEntityProcessorOptions) {
+  constructor({ auth, discovery, config, logger }: RootlyEntityProcessorOptions) {
     this.logger = logger;
+    this.auth = auth;
     this.discovery = discovery;
     this.config = config;
     console.log('RootlyEntityProcessor initialized');
   }
 
-  useRootlyClient = ({
+  useRootlyClient = async ({
+    auth,
     discovery,
     config,
     organizationId,
   }: {
+    auth: AuthService;
     discovery: DiscoveryService;
     config: RootConfigService;
     organizationId?: string;
   }) => {
     const configKeys = config.getConfig('rootly').keys();
 
-    let token = config.getOptionalString(`rootly.${configKeys.at(0)}.apiKey`);
+    let apiProxyPath = config.getOptionalString(`rootly.${configKeys.at(0)}.proxyPath`);
 
     if (organizationId) {
-      token = config.getOptionalString(`rootly.${organizationId}.apiKey`);
+      apiProxyPath = config.getOptionalString(`rootly.${organizationId}.proxyPath`);
     } else if (configKeys.length > 1) {
       let defaultOrgId = config.getConfig('rootly').keys().at(0);
       for (const orgId of config.getConfig('rootly').keys()) {
@@ -109,14 +115,18 @@ export class RootlyEntityProcessor implements CatalogProcessor {
           break;
         }
       }
-      token = config.getOptionalString(`rootly.${defaultOrgId}.apiKey`);
+      apiProxyPath = config.getOptionalString(`rootly.${defaultOrgId}.proxyPath`);
     }
 
+    const token = auth.getPluginRequestToken({
+      onBehalfOf: await auth.getOwnServiceCredentials(),
+      targetPluginId: 'rootly', // e.g. 'catalog'
+    });
+
     const client = new RootlyApi({
-      apiProxyPath: discovery.getBaseUrl('proxy'),
-      apiToken: new Promise(resolve => {
-        resolve({ token: token });
-      }),
+      apiProxyUrl: discovery.getBaseUrl('proxy'),
+      apiProxyPath: apiProxyPath,
+      apiToken: token,
     });
     return client;
   };
@@ -131,7 +141,8 @@ export class RootlyEntityProcessor implements CatalogProcessor {
     emit: CatalogProcessorEmit,
   ): Promise<Entity> {
     if (this.shouldProcessEntity(entity)) {
-      const rootlyClient = this.useRootlyClient({
+      const rootlyClient = await this.useRootlyClient({
+        auth: this.auth,
         discovery: this.discovery,
         config: this.config,
         organizationId: entity.metadata.annotations?.[ROOTLY_ANNOTATION_ORG_ID],

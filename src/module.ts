@@ -10,12 +10,13 @@ export const catalogModuleRootlyReaderProcessor = createBackendModule({
       env.registerInit({
         deps: {
           catalog: catalogProcessingExtensionPoint,
+          auth: coreServices.auth,
           discovery: coreServices.discovery,
           config: coreServices.rootConfig,
           logger: coreServices.logger,
         },
-        async init({ catalog, discovery, config, logger }) {
-          catalog.addProcessor(new RootlyEntityProcessor({discovery: discovery, config: config, logger: logger}));
+        async init({ catalog, auth, discovery, config, logger }) {
+          catalog.addProcessor(new RootlyEntityProcessor({auth: auth, discovery: discovery, config: config, logger: logger}));
         },
       });
     },
