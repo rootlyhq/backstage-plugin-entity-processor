@@ -5097,10 +5097,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rootly/backstage-plugin-common@npm:^1.0.0-beta.3":
-  version: 1.0.0-beta.3
-  resolution: "@rootly/backstage-plugin-common@npm:1.0.0-beta.3"
-  checksum: 10/ea2985eaae4c771cb011e62595f017ef97735744c10e5b46cc6adea35fb36fe814eaa0136838dee335fca9bca5b126853b1f68ac20f4429dc10e9dfeab9d2927
+"@rootly/backstage-plugin-common@npm:^1.0.0-beta.5":
+  version: 1.0.0-beta.5
+  resolution: "@rootly/backstage-plugin-common@npm:1.0.0-beta.5"
+  checksum: 10/3d6ee78cc633d8fb3479d5a55cbb5583e5da0b5dadbeed74d498d963b5ad22a7f99c5a891d65237ad0df37be186ca9366297bc31c6e3d2a410e8c31934b3d4df
   languageName: node
   linkType: hard
 
@@ -5117,7 +5117,7 @@ __metadata:
     "@backstage/plugin-catalog-common": "npm:^1.0.26"
     "@backstage/plugin-catalog-node": "npm:^1.12.6"
     "@rjsf/core": "npm:^5.14.3"
-    "@rootly/backstage-plugin-common": "npm:^1.0.0-beta.3"
+    "@rootly/backstage-plugin-common": "npm:^1.0.0-beta.5"
     "@types/node": "npm:^20.9.2"
     "@types/node-fetch": "npm:2.6.11"
     "@types/supertest": "npm:^2.0.12"
