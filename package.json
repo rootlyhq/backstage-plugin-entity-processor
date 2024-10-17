@@ -35,13 +35,13 @@
     "postpack": "backstage-cli package postpack"
   },
   "dependencies": {
-    "@backstage/backend-common": "^0.24.1",
-    "@backstage/backend-defaults": "^0.4.4",
-    "@backstage/backend-plugin-api": "^0.8.1",
-    "@backstage/catalog-model": "^1.6.0",
+    "@backstage/backend-common": "^0.25.0",
+    "@backstage/backend-defaults": "^0.5.0",
+    "@backstage/backend-plugin-api": "^1.0.0",
+    "@backstage/catalog-model": "^1.7.0",
     "@backstage/config": "^1.2.0",
-    "@backstage/plugin-catalog-common": "^1.0.26",
-    "@backstage/plugin-catalog-node": "^1.12.6",
+    "@backstage/plugin-catalog-common": "^1.1.0",
+    "@backstage/plugin-catalog-node": "^1.13.0",
     "@rjsf/core": "^5.14.3",
     "@rootly/backstage-plugin-common": "^1.0.0-beta.5",
     "node-fetch": "^2.6.7",
@@ -50,7 +50,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@backstage/cli": "^0.27.0",
+    "@backstage/cli": "^0.27.1",
     "@types/node": "^20.9.2",
     "@types/node-fetch": "2.6.11",
     "@types/supertest": "^2.0.12",
