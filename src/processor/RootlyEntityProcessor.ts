@@ -141,23 +141,25 @@ export class RootlyEntityProcessor implements CatalogProcessor {
     emit: CatalogProcessorEmit,
   ): Promise<Entity> {
     if (this.shouldProcessEntity(entity)) {
+      const organizationId = entity.metadata.annotations?.[ROOTLY_ANNOTATION_ORG_ID];
       const rootlyClient = await this.useRootlyClient({
         auth: this.auth,
         discovery: this.discovery,
         config: this.config,
-        organizationId: entity.metadata.annotations?.[ROOTLY_ANNOTATION_ORG_ID],
+        organizationId: organizationId,
       });
       if (this.serviceIdAnnotations(entity)) {
-        return this.processRootlyService(rootlyClient, entity, location, emit);
+        return this.processRootlyService(rootlyClient, organizationId, entity, location, emit);
       } else if (this.functionalityIdAnnotations(entity)) {
         return this.processRootlyFunctionality(
           rootlyClient,
+          organizationId,
           entity,
           location,
           emit,
         );
       } else if (this.teamIdAnnotations(entity)) {
-        return this.processRootlyTeam(rootlyClient, entity, location, emit);
+        return this.processRootlyTeam(rootlyClient, organizationId, entity, location, emit);
       }
     }
     return entity;
@@ -165,6 +167,7 @@ export class RootlyEntityProcessor implements CatalogProcessor {
 
   async processRootlyService(
     rootlyClient: RootlyApi,
+    organizationId: string | undefined,
     entity: Entity,
     location: LocationSpec,
     emit: CatalogProcessorEmit,
@@ -206,7 +209,7 @@ export class RootlyEntityProcessor implements CatalogProcessor {
               annotationService,
               service,
             );
-            updateAnnotations(entity, {
+            updateAnnotations(entity, organizationId, {
               serviceId: response.data.id,
             });
           }
@@ -215,7 +218,7 @@ export class RootlyEntityProcessor implements CatalogProcessor {
             entity as RootlyEntity,
             annotationService,
           );
-          updateAnnotations(entity, {
+          updateAnnotations(entity, organizationId, {
             serviceId: response.data.id,
           });
         }
@@ -235,6 +238,7 @@ export class RootlyEntityProcessor implements CatalogProcessor {
 
   async processRootlyFunctionality(
     rootlyClient: RootlyApi,
+    organizationId: string | undefined,
     entity: Entity,
     location: LocationSpec,
     emit: CatalogProcessorEmit,
@@ -277,7 +281,7 @@ export class RootlyEntityProcessor implements CatalogProcessor {
               annotationFunctionality,
               functionality,
             );
-            updateAnnotations(entity, {
+            updateAnnotations(entity, organizationId, {
               functionalityId: response.data.id,
             });
           }
@@ -286,7 +290,7 @@ export class RootlyEntityProcessor implements CatalogProcessor {
             entity as RootlyEntity,
             annotationFunctionality,
           );
-          updateAnnotations(entity, {
+          updateAnnotations(entity, organizationId, {
             functionalityId: response.data.id,
           });
         }
@@ -307,6 +311,7 @@ export class RootlyEntityProcessor implements CatalogProcessor {
   async processRootlyTeam(
     rootlyClient: RootlyApi,
     entity: Entity,
+    organizationId: string | undefined,
     location: LocationSpec,
     emit: CatalogProcessorEmit,
   ): Promise<Entity> {
@@ -345,7 +350,7 @@ export class RootlyEntityProcessor implements CatalogProcessor {
               annotationTeam,
               team,
             );
-            updateAnnotations(entity, {
+            updateAnnotations(entity, organizationId, {
               teamId: response.data.id,
             });
           }
@@ -354,7 +359,7 @@ export class RootlyEntityProcessor implements CatalogProcessor {
             entity as RootlyEntity,
             annotationTeam,
           );
-          updateAnnotations(entity, {
+          updateAnnotations(entity, organizationId, {
             teamId: response.data.id,
           });
         }
@@ -382,28 +387,37 @@ export type AnnotationUpdateProps = {
 
 function updateAnnotations(
   entity: Entity,
+  organizationId: string | undefined,
   annotations: AnnotationUpdateProps,
 ): void {
+  // If organizationId is present, add the annotations to the entity
+  if (organizationId) {
+    entity.metadata.annotations![ROOTLY_ANNOTATION_ORG_ID] =
+    organizationId;
+  } else {
+    delete entity.metadata.annotations![ROOTLY_ANNOTATION_ORG_ID];
+  }
+
   // If serviceId is present, add the annotations to the entity
   if (annotations.serviceId && annotations.serviceId !== '') {
-    entity.metadata.annotations!['rootly.com/service-id'] =
+    entity.metadata.annotations![ROOTLY_ANNOTATION_SERVICE_ID] =
       annotations.serviceId;
   } else {
-    delete entity.metadata.annotations!['rootly.com/service-id'];
+    delete entity.metadata.annotations![ROOTLY_ANNOTATION_SERVICE_ID];
   }
 
   // If functionalityId is present, add the annotations to the entity
   if (annotations.functionalityId && annotations.functionalityId !== '') {
-    entity.metadata.annotations!['rootly.com/functionality-id'] =
+    entity.metadata.annotations![ROOTLY_ANNOTATION_FUNCTIONALITY_ID] =
       annotations.functionalityId;
   } else {
-    delete entity.metadata.annotations!['rootly.com/functionality-id'];
+    delete entity.metadata.annotations![ROOTLY_ANNOTATION_FUNCTIONALITY_ID];
   }
 
   // If teamId is present, add the annotations to the entity
   if (annotations.teamId && annotations.teamId !== '') {
-    entity.metadata.annotations!['rootly.com/team-id'] = annotations.teamId;
+    entity.metadata.annotations![ROOTLY_ANNOTATION_TEAM_ID] = annotations.teamId;
   } else {
-    delete entity.metadata.annotations!['rootly.com/team-id'];
+    delete entity.metadata.annotations![ROOTLY_ANNOTATION_TEAM_ID];
   }
 }

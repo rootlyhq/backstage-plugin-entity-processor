@@ -1,2 +1,2 @@
 /** @public */
-export declare const catalogModuleRootlyReaderProcessor: import("@backstage/backend-plugin-api").BackendFeatureCompat;
+export declare const catalogModuleRootlyReaderProcessor: import("@backstage/backend-plugin-api").BackendFeature;
