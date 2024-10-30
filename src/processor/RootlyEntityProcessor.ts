@@ -82,7 +82,12 @@ export class RootlyEntityProcessor implements CatalogProcessor {
     );
   };
 
-  constructor({ auth, discovery, config, logger }: RootlyEntityProcessorOptions) {
+  constructor({
+    auth,
+    discovery,
+    config,
+    logger,
+  }: RootlyEntityProcessorOptions) {
     this.logger = logger;
     this.auth = auth;
     this.discovery = discovery;
@@ -103,10 +108,14 @@ export class RootlyEntityProcessor implements CatalogProcessor {
   }) => {
     const configKeys = config.getConfig('rootly').keys();
 
-    let apiProxyPath = config.getOptionalString(`rootly.${configKeys.at(0)}.proxyPath`);
+    let apiProxyPath = config.getOptionalString(
+      `rootly.${configKeys.at(0)}.proxyPath`,
+    );
 
     if (organizationId) {
-      apiProxyPath = config.getOptionalString(`rootly.${organizationId}.proxyPath`);
+      apiProxyPath = config.getOptionalString(
+        `rootly.${organizationId}.proxyPath`,
+      );
     } else if (configKeys.length > 1) {
       let defaultOrgId = config.getConfig('rootly').keys().at(0);
       for (const orgId of config.getConfig('rootly').keys()) {
@@ -115,7 +124,9 @@ export class RootlyEntityProcessor implements CatalogProcessor {
           break;
         }
       }
-      apiProxyPath = config.getOptionalString(`rootly.${defaultOrgId}.proxyPath`);
+      apiProxyPath = config.getOptionalString(
+        `rootly.${defaultOrgId}.proxyPath`,
+      );
     }
 
     const token = auth.getPluginRequestToken({
@@ -141,7 +152,8 @@ export class RootlyEntityProcessor implements CatalogProcessor {
     emit: CatalogProcessorEmit,
   ): Promise<Entity> {
     if (this.shouldProcessEntity(entity)) {
-      const organizationId = entity.metadata.annotations?.[ROOTLY_ANNOTATION_ORG_ID];
+      const organizationId =
+        entity.metadata.annotations?.[ROOTLY_ANNOTATION_ORG_ID];
       const rootlyClient = await this.useRootlyClient({
         auth: this.auth,
         discovery: this.discovery,
@@ -149,7 +161,13 @@ export class RootlyEntityProcessor implements CatalogProcessor {
         organizationId: organizationId,
       });
       if (this.serviceIdAnnotations(entity)) {
-        return this.processRootlyService(rootlyClient, organizationId, entity, location, emit);
+        return this.processRootlyService(
+          rootlyClient,
+          organizationId,
+          entity,
+          location,
+          emit,
+        );
       } else if (this.functionalityIdAnnotations(entity)) {
         return this.processRootlyFunctionality(
           rootlyClient,
@@ -159,7 +177,13 @@ export class RootlyEntityProcessor implements CatalogProcessor {
           emit,
         );
       } else if (this.teamIdAnnotations(entity)) {
-        return this.processRootlyTeam(rootlyClient, organizationId, entity, location, emit);
+        return this.processRootlyTeam(
+          rootlyClient,
+          organizationId,
+          entity,
+          location,
+          emit,
+        );
       }
     }
     return entity;
@@ -225,9 +249,23 @@ export class RootlyEntityProcessor implements CatalogProcessor {
       }
     } catch (error) {
       if (error instanceof Error) {
-        if ((error.cause as any).status === 404 && entity.metadata.annotations?.[ROOTLY_ANNOTATION_SERVICE_AUTO_IMPORT]) {
-          rootlyClient.importServiceEntity(entity as RootlyEntity);
+        if (
+          (error.cause as any).status === 404 &&
+          entity.metadata.annotations?.[ROOTLY_ANNOTATION_SERVICE_AUTO_IMPORT]
+        ) {
+          try {
+            rootlyClient.importServiceEntity(entity as RootlyEntity);
+          } catch (importError: unknown) {
+            if (importError instanceof Error) {
+              this.logger.debug(
+                `[ROOTLY PLUGIN] Error Importing entity ${entityTriplet}: ${importError.message}`,
+              );
+            }
+          }
         } else {
+          this.logger.debug(
+            `[ROOTLY PLUGIN] Error Importing entity ${entityTriplet}: ${error.toString()}`,
+          );
           emit(processingResult.generalError(location, error.toString()));
         }
       }
@@ -297,9 +335,25 @@ export class RootlyEntityProcessor implements CatalogProcessor {
       }
     } catch (error) {
       if (error instanceof Error) {
-        if ((error.cause as any).status === 404 && entity.metadata.annotations?.[ROOTLY_ANNOTATION_FUNCTIONALITY_AUTO_IMPORT]) {
-          rootlyClient.importFunctionalityEntity(entity as RootlyEntity);
+        if (
+          (error.cause as any).status === 404 &&
+          entity.metadata.annotations?.[
+            ROOTLY_ANNOTATION_FUNCTIONALITY_AUTO_IMPORT
+          ]
+        ) {
+          try {
+            rootlyClient.importFunctionalityEntity(entity as RootlyEntity);
+          } catch (importError: unknown) {
+            if (importError instanceof Error) {
+              this.logger.debug(
+                `[ROOTLY PLUGIN] Error Importing entity ${entityTriplet}: ${importError.message}`,
+              );
+            }
+          }
         } else {
+          this.logger.debug(
+            `[ROOTLY PLUGIN] Error Importing entity ${entityTriplet}: ${error.toString()}`,
+          );
           emit(processingResult.generalError(location, error.toString()));
         }
       }
@@ -310,8 +364,8 @@ export class RootlyEntityProcessor implements CatalogProcessor {
 
   async processRootlyTeam(
     rootlyClient: RootlyApi,
-    entity: Entity,
     organizationId: string | undefined,
+    entity: Entity,
     location: LocationSpec,
     emit: CatalogProcessorEmit,
   ): Promise<Entity> {
@@ -366,9 +420,23 @@ export class RootlyEntityProcessor implements CatalogProcessor {
       }
     } catch (error) {
       if (error instanceof Error) {
-        if ((error.cause as any).status === 404 && entity.metadata.annotations?.[ROOTLY_ANNOTATION_TEAM_AUTO_IMPORT]) {
-          rootlyClient.importTeamEntity(entity as RootlyEntity);
+        if (
+          (error.cause as any).status === 404 &&
+          entity.metadata.annotations?.[ROOTLY_ANNOTATION_TEAM_AUTO_IMPORT]
+        ) {
+          try {
+            rootlyClient.importTeamEntity(entity as RootlyEntity);
+          } catch (importError: unknown) {
+            if (importError instanceof Error) {
+              this.logger.debug(
+                `[ROOTLY PLUGIN] Error Importing entity ${entityTriplet}: ${importError.message}`,
+              );
+            }
+          }
         } else {
+          this.logger.debug(
+            `[ROOTLY PLUGIN] Error Importing entity ${entityTriplet}: ${error.toString()}`,
+          );
           emit(processingResult.generalError(location, error.toString()));
         }
       }
@@ -392,8 +460,7 @@ function updateAnnotations(
 ): void {
   // If organizationId is present, add the annotations to the entity
   if (organizationId) {
-    entity.metadata.annotations![ROOTLY_ANNOTATION_ORG_ID] =
-    organizationId;
+    entity.metadata.annotations![ROOTLY_ANNOTATION_ORG_ID] = organizationId;
   } else {
     delete entity.metadata.annotations![ROOTLY_ANNOTATION_ORG_ID];
   }
@@ -416,7 +483,8 @@ function updateAnnotations(
 
   // If teamId is present, add the annotations to the entity
   if (annotations.teamId && annotations.teamId !== '') {
-    entity.metadata.annotations![ROOTLY_ANNOTATION_TEAM_ID] = annotations.teamId;
+    entity.metadata.annotations![ROOTLY_ANNOTATION_TEAM_ID] =
+      annotations.teamId;
   } else {
     delete entity.metadata.annotations![ROOTLY_ANNOTATION_TEAM_ID];
   }
