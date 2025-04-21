@@ -131,7 +131,7 @@ export class RootlyEntityProcessor implements CatalogProcessor {
 
     const token = auth.getPluginRequestToken({
       onBehalfOf: await auth.getOwnServiceCredentials(),
-      targetPluginId: 'rootly', // e.g. 'catalog'
+      targetPluginId: 'proxy', // e.g. 'catalog'
     });
 
     const client = new RootlyApi({
