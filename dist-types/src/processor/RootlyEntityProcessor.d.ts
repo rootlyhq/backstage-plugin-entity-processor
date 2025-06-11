@@ -28,7 +28,7 @@ export declare class RootlyEntityProcessor implements CatalogProcessor {
         auth: AuthService;
         discovery: DiscoveryService;
         config: RootConfigService;
-        organizationId?: string | undefined;
+        organizationId?: string;
     }) => Promise<RootlyApi>;
     getProcessorName(): string;
     postProcessEntity(entity: Entity, location: LocationSpec, emit: CatalogProcessorEmit): Promise<Entity>;
