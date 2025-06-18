@@ -263,10 +263,9 @@ export class RootlyEntityProcessor implements CatalogProcessor {
             }
           }
         } else {
-          this.logger.debug(
-            `[ROOTLY PLUGIN] Error Importing entity ${entityTriplet}: ${error.toString()}`,
+          this.logger.error(
+            `[ROOTLY PLUGIN] Error processing entity ${entityTriplet}: ${error.toString()}`,
           );
-          emit(processingResult.generalError(location, error.toString()));
         }
       }
     }
@@ -351,10 +350,9 @@ export class RootlyEntityProcessor implements CatalogProcessor {
             }
           }
         } else {
-          this.logger.debug(
-            `[ROOTLY PLUGIN] Error Importing entity ${entityTriplet}: ${error.toString()}`,
+          this.logger.error(
+            `[ROOTLY PLUGIN] Error processing entity ${entityTriplet}: ${error.toString()}`,
           );
-          emit(processingResult.generalError(location, error.toString()));
         }
       }
     }
@@ -434,10 +432,9 @@ export class RootlyEntityProcessor implements CatalogProcessor {
             }
           }
         } else {
-          this.logger.debug(
-            `[ROOTLY PLUGIN] Error Importing entity ${entityTriplet}: ${error.toString()}`,
+          this.logger.error(
+            `[ROOTLY PLUGIN] Error processing entity ${entityTriplet}: ${error.toString()}`,
           );
-          emit(processingResult.generalError(location, error.toString()));
         }
       }
     }
