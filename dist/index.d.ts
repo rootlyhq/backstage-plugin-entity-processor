@@ -1,6 +1,6 @@
 import * as _backstage_backend_plugin_api from '@backstage/backend-plugin-api';
 
 /** @public */
-declare const rootlyEntityProcessor: _backstage_backend_plugin_api.BackendFeatureCompat;
+declare const catalogModuleRootlyReaderProcessor: _backstage_backend_plugin_api.BackendFeature;
 
-export { rootlyEntityProcessor as default };
+export { catalogModuleRootlyReaderProcessor as default };
