@@ -1,5 +1,9 @@
 # @rootly/backstage-plugin-entity-processor
 
+## 1.2.1
+
+- Fix missing module.cjs.js and processor files in published package
+
 ## 1.2.0
 
 - Upgrade dependencies
