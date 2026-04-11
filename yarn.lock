@@ -2365,7 +2365,7 @@ __metadata:
     "@rjsf/core": "npm:^5.24.13"
     "@rootly/backstage-plugin-common": "npm:^1.1.1"
     "@types/jest": "npm:^30.0.0"
-    "@types/node": "npm:^20.19.19"
+    "@types/node": "npm:^25.5.2"
     "@types/node-fetch": "npm:2.6.13"
     "@types/supertest": "npm:^2.0.16"
     "@types/webpack-env": "npm:1.18.8"
@@ -3139,12 +3139,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^20.19.19":
-  version: 20.19.19
-  resolution: "@types/node@npm:20.19.19"
+"@types/node@npm:^25.5.2":
+  version: 25.6.0
+  resolution: "@types/node@npm:25.6.0"
   dependencies:
-    undici-types: "npm:~6.21.0"
-  checksum: 10/0230dadfe83f1aa6a5e4aad5e00a6ee3501bd539f19024b40ac198afcb4e21e3ab8b8f47c4765e5c537a1da1e53dcb41cd5549aa48efc686c9542cc9841663bb
+    undici-types: "npm:~7.19.0"
+  checksum: 10/99b18690a4be55904cbf8f6a6ac8eed5ec5b8d791fdd8ee2ae598b46c0fa9b83cda7b70dd7f00dbfb18189dcfc67648fdc7fdd3fcced2619a5a6453d9aec107d
   languageName: node
   linkType: hard
 
@@ -14951,10 +14951,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici-types@npm:~6.21.0":
-  version: 6.21.0
-  resolution: "undici-types@npm:6.21.0"
-  checksum: 10/ec8f41aa4359d50f9b59fa61fe3efce3477cc681908c8f84354d8567bb3701fafdddf36ef6bff307024d3feb42c837cf6f670314ba37fc8145e219560e473d14
+"undici-types@npm:~7.19.0":
+  version: 7.19.2
+  resolution: "undici-types@npm:7.19.2"
+  checksum: 10/05c34c63444c8caca7137f122b29ed50c1d7d05d1e0b2337f423575d3264054c4a0139e47e82e65723d09b97fcad6d8b0223b3550430a9006cc00e72a1e035bf
   languageName: node
   linkType: hard
 
