@@ -1,5 +1,10 @@
 # @rootly/backstage-plugin-entity-processor
 
+## 1.2.2
+
+- Add missing await on import entity calls
+- Upgrade import error logging from debug to error
+
 ## 1.2.1
 
 - Fix missing module.cjs.js and processor files in published package
