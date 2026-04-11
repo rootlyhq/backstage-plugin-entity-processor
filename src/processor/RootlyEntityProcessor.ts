@@ -254,10 +254,10 @@ export class RootlyEntityProcessor implements CatalogProcessor {
           entity.metadata.annotations?.[ROOTLY_ANNOTATION_SERVICE_AUTO_IMPORT]
         ) {
           try {
-            rootlyClient.importServiceEntity(entity as RootlyEntity);
+            await rootlyClient.importServiceEntity(entity as RootlyEntity);
           } catch (importError: unknown) {
             if (importError instanceof Error) {
-              this.logger.debug(
+              this.logger.error(
                 `[ROOTLY PLUGIN] Error Importing entity ${entityTriplet}: ${importError.message}`,
               );
             }
@@ -341,10 +341,10 @@ export class RootlyEntityProcessor implements CatalogProcessor {
           ]
         ) {
           try {
-            rootlyClient.importFunctionalityEntity(entity as RootlyEntity);
+            await rootlyClient.importFunctionalityEntity(entity as RootlyEntity);
           } catch (importError: unknown) {
             if (importError instanceof Error) {
-              this.logger.debug(
+              this.logger.error(
                 `[ROOTLY PLUGIN] Error Importing entity ${entityTriplet}: ${importError.message}`,
               );
             }
@@ -423,10 +423,10 @@ export class RootlyEntityProcessor implements CatalogProcessor {
           entity.metadata.annotations?.[ROOTLY_ANNOTATION_TEAM_AUTO_IMPORT]
         ) {
           try {
-            rootlyClient.importTeamEntity(entity as RootlyEntity);
+            await rootlyClient.importTeamEntity(entity as RootlyEntity);
           } catch (importError: unknown) {
             if (importError instanceof Error) {
-              this.logger.debug(
+              this.logger.error(
                 `[ROOTLY PLUGIN] Error Importing entity ${entityTriplet}: ${importError.message}`,
               );
             }
