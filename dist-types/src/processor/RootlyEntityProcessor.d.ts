@@ -23,6 +23,7 @@ export declare class RootlyEntityProcessor implements CatalogProcessor {
     private serviceIdAnnotations;
     private functionalityIdAnnotations;
     private teamIdAnnotations;
+    private catalogEntityIdAnnotations;
     constructor({ auth, discovery, config, logger, }: RootlyEntityProcessorOptions);
     useRootlyClient: ({ auth, discovery, config, organizationId, }: {
         auth: AuthService;
@@ -35,10 +36,12 @@ export declare class RootlyEntityProcessor implements CatalogProcessor {
     processRootlyService(rootlyClient: RootlyApi, organizationId: string | undefined, entity: Entity, location: LocationSpec, emit: CatalogProcessorEmit): Promise<Entity>;
     processRootlyFunctionality(rootlyClient: RootlyApi, organizationId: string | undefined, entity: Entity, location: LocationSpec, emit: CatalogProcessorEmit): Promise<Entity>;
     processRootlyTeam(rootlyClient: RootlyApi, organizationId: string | undefined, entity: Entity, location: LocationSpec, emit: CatalogProcessorEmit): Promise<Entity>;
+    processRootlyCatalogEntity(rootlyClient: RootlyApi, organizationId: string | undefined, entity: Entity, location: LocationSpec, emit: CatalogProcessorEmit): Promise<Entity>;
 }
 export type AnnotationUpdateProps = {
     serviceId?: string;
     functionalityId?: string;
     teamId?: string;
     pagerdutyServiceId?: string;
+    catalogEntityId?: string;
 };

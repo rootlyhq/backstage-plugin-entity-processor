@@ -9,7 +9,7 @@ class RootlyEntityProcessor {
   discovery;
   config;
   shouldProcessEntity = (entity) => {
-    return (this.serviceIdAnnotations(entity) || this.functionalityIdAnnotations(entity) || this.teamIdAnnotations(entity)) !== void 0;
+    return (this.serviceIdAnnotations(entity) || this.functionalityIdAnnotations(entity) || this.teamIdAnnotations(entity) || this.catalogEntityIdAnnotations(entity)) !== void 0;
   };
   serviceIdAnnotations = (entity) => {
     return entity.metadata.annotations?.[backstagePluginCommon.ROOTLY_ANNOTATION_SERVICE_ID] || entity.metadata.annotations?.[backstagePluginCommon.ROOTLY_ANNOTATION_SERVICE_SLUG];
@@ -19,6 +19,9 @@ class RootlyEntityProcessor {
   };
   teamIdAnnotations = (entity) => {
     return entity.metadata.annotations?.[backstagePluginCommon.ROOTLY_ANNOTATION_TEAM_ID] || entity.metadata.annotations?.[backstagePluginCommon.ROOTLY_ANNOTATION_TEAM_SLUG];
+  };
+  catalogEntityIdAnnotations = (entity) => {
+    return entity.metadata.annotations?.[backstagePluginCommon.ROOTLY_ANNOTATION_CATALOG_ENTITY_ID] || entity.metadata.annotations?.[backstagePluginCommon.ROOTLY_ANNOTATION_CATALOG_ENTITY_SLUG];
   };
   constructor({
     auth,
@@ -100,6 +103,14 @@ class RootlyEntityProcessor {
         );
       } else if (this.teamIdAnnotations(entity)) {
         return this.processRootlyTeam(
+          rootlyClient,
+          organizationId,
+          entity,
+          location,
+          emit
+        );
+      } else if (this.catalogEntityIdAnnotations(entity)) {
+        return this.processRootlyCatalogEntity(
           rootlyClient,
           organizationId,
           entity,
@@ -296,6 +307,67 @@ class RootlyEntityProcessor {
     }
     return entity;
   }
+  async processRootlyCatalogEntity(rootlyClient, organizationId, entity, location, emit) {
+    const entityTriplet = catalogModel.stringifyEntityRef({
+      namespace: entity.metadata.namespace,
+      kind: entity.kind,
+      name: entity.metadata.name
+    });
+    this.logger.debug(`[ROOTLY PLUGIN] Processing entity ${entityTriplet}`);
+    try {
+      const catalogEntityIdAnnotation = this.catalogEntityIdAnnotations(entity);
+      if (catalogEntityIdAnnotation) {
+        const annotationCatalogEntityResponse = await rootlyClient.getCatalogEntity(catalogEntityIdAnnotation);
+        const annotationCatalogEntity = annotationCatalogEntityResponse.data;
+        if (annotationCatalogEntity.attributes.backstage_id && annotationCatalogEntity.attributes.backstage_id !== entityTriplet) {
+          const response = await rootlyClient.updateCatalogEntityEntity(
+            entity,
+            annotationCatalogEntity
+          );
+          updateAnnotations(entity, organizationId, {
+            catalogEntityId: response.data.id
+          });
+        } else {
+          const response = await rootlyClient.updateCatalogEntityEntity(
+            entity,
+            annotationCatalogEntity
+          );
+          updateAnnotations(entity, organizationId, {
+            catalogEntityId: response.data.id
+          });
+        }
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        if (error.cause.status === 404 && entity.metadata.annotations?.[backstagePluginCommon.ROOTLY_ANNOTATION_CATALOG_ENTITY_AUTO_IMPORT]) {
+          const catalogId = entity.metadata.annotations?.[backstagePluginCommon.ROOTLY_ANNOTATION_CATALOG_ID] || entity.metadata.annotations?.[backstagePluginCommon.ROOTLY_ANNOTATION_CATALOG_SLUG];
+          if (catalogId) {
+            try {
+              await rootlyClient.importCatalogEntityEntity(
+                entity,
+                catalogId
+              );
+            } catch (importError) {
+              if (importError instanceof Error) {
+                this.logger.error(
+                  `[ROOTLY PLUGIN] Error Importing entity ${entityTriplet}: ${importError.message}`
+                );
+              }
+            }
+          } else {
+            this.logger.warn(
+              `[ROOTLY PLUGIN] Cannot auto-import catalog entity ${entityTriplet}: missing rootly.com/catalog-id or rootly.com/catalog-slug annotation`
+            );
+          }
+        } else {
+          this.logger.error(
+            `[ROOTLY PLUGIN] Error processing entity ${entityTriplet}: ${error.toString()}`
+          );
+        }
+      }
+    }
+    return entity;
+  }
 }
 function updateAnnotations(entity, organizationId, annotations) {
   if (organizationId) {
@@ -317,6 +389,11 @@ function updateAnnotations(entity, organizationId, annotations) {
     entity.metadata.annotations[backstagePluginCommon.ROOTLY_ANNOTATION_TEAM_ID] = annotations.teamId;
   } else {
     delete entity.metadata.annotations[backstagePluginCommon.ROOTLY_ANNOTATION_TEAM_ID];
+  }
+  if (annotations.catalogEntityId && annotations.catalogEntityId !== "") {
+    entity.metadata.annotations[backstagePluginCommon.ROOTLY_ANNOTATION_CATALOG_ENTITY_ID] = annotations.catalogEntityId;
+  } else {
+    delete entity.metadata.annotations[backstagePluginCommon.ROOTLY_ANNOTATION_CATALOG_ENTITY_ID];
   }
 }
 
