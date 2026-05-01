@@ -12,12 +12,13 @@ The Rootly plugin is a frontend plugin that displays Rootly services, incidents 
   - View and search a list of functionalities
   - View and search a list of teams
   - View and search a list of incidents
+  - View and search a list of catalog entities (with catalog selector)
 
-- The `RootlyOverviewCard` component which produces a summary of your entity with incidents over last 30 days and ongoing incidents.
+- The `RootlyOverviewCard` component which produces a summary of your entity with incidents over last 30 days and ongoing incidents. Also supports catalog entities with name, description, and properties display.
 
 - The `RootlyIncidentsPage` component which produces a dedicated page within your entity with details about ongoing and past incidents.
 
-You can link and import entities in rootly services through Backstage Web UI or through annotations.
+You can link and import entities in rootly services, functionalities, teams, and catalog entities through Backstage Web UI or through annotations.
 
 ## Installation
 
@@ -103,6 +104,13 @@ rootly.com/team-slug: infrastucture # Use team-id or team-slug. Not both.
 rootly.com/team-name: Infrastucture # Use team-id or team-slug. Not both.
 rootly.com/team-slug: infrastucture # Use team-id or team-slug. Not both.
 rootly.com/team-auto-import: enabled # This will auto import the entity as a rootly team if we don't find any.
+rootly.com/catalog-entity-id: 7a328a08-6701-445e-a1ad-ca2fb913ed1e # Use catalog-entity-id or catalog-entity-slug. Not both.
+rootly.com/catalog-entity-name: Enterprise
+rootly.com/catalog-entity-slug: enterprise # Use catalog-entity-id or catalog-entity-slug. Not both.
+rootly.com/catalog-entity-auto-import: enabled # This will auto import the entity as a rootly catalog entity if we don't find any.
+rootly.com/catalog-id: 7a328a08-6701-445e-a1ad-ca2fb913ed1e # Required for auto-import. The catalog to create the entity in.
+rootly.com/catalog-slug: customer-tier # Alternative to catalog-id. The catalog slug to find or create.
+rootly.com/catalog-description: Customer pricing tiers # Optional. Description for the catalog when auto-creating.
 ```
 
 #### Example
@@ -124,6 +132,25 @@ spec:
   type: grpc
   owner: guests
   lifecycle: experimental
+```
+
+#### Catalog Entity Example
+
+```yaml
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: enterprise-tier
+  description: Enterprise customer tier
+  annotations:
+    rootly.com/catalog-entity-slug: enterprise-tier
+    rootly.com/catalog-entity-auto-import: enabled
+    rootly.com/catalog-slug: customer-tier
+    rootly.com/catalog-description: Customer pricing tiers
+spec:
+  type: service
+  owner: guests
+  lifecycle: production
 ```
 
 ### Global
