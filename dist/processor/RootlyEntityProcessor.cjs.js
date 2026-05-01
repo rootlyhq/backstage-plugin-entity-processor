@@ -343,7 +343,8 @@ class RootlyEntityProcessor {
           const catalogIdOrSlug = entity.metadata.annotations?.[backstagePluginCommon.ROOTLY_ANNOTATION_CATALOG_ID] || entity.metadata.annotations?.[backstagePluginCommon.ROOTLY_ANNOTATION_CATALOG_SLUG];
           if (catalogIdOrSlug) {
             try {
-              const catalog = await rootlyClient.findOrCreateCatalog(catalogIdOrSlug);
+              const catalogDescription = entity.metadata.annotations?.[backstagePluginCommon.ROOTLY_ANNOTATION_CATALOG_DESCRIPTION];
+              const catalog = await rootlyClient.findOrCreateCatalog(catalogIdOrSlug, catalogDescription);
               await rootlyClient.importCatalogEntityEntity(
                 entity,
                 catalog.data.id

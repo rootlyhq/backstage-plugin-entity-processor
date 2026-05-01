@@ -25,6 +25,7 @@ import {
   ROOTLY_ANNOTATION_CATALOG_ENTITY_SLUG,
   ROOTLY_ANNOTATION_CATALOG_ID,
   ROOTLY_ANNOTATION_CATALOG_SLUG,
+  ROOTLY_ANNOTATION_CATALOG_DESCRIPTION,
   RootlyApi,
 } from '@rootly/backstage-plugin-common';
 import {
@@ -521,7 +522,8 @@ export class RootlyEntityProcessor implements CatalogProcessor {
             entity.metadata.annotations?.[ROOTLY_ANNOTATION_CATALOG_SLUG];
           if (catalogIdOrSlug) {
             try {
-              const catalog = await rootlyClient.findOrCreateCatalog(catalogIdOrSlug);
+              const catalogDescription = entity.metadata.annotations?.[ROOTLY_ANNOTATION_CATALOG_DESCRIPTION];
+              const catalog = await rootlyClient.findOrCreateCatalog(catalogIdOrSlug, catalogDescription);
               await rootlyClient.importCatalogEntityEntity(
                 entity as RootlyEntity,
                 catalog.data.id,
