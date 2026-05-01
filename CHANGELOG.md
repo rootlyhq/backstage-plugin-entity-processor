@@ -1,5 +1,15 @@
 # @rootly/backstage-plugin-entity-processor
 
+## 1.3.0
+
+- Add catalog entity processing support
+- Detect `rootly.com/catalog-entity-id` and `rootly.com/catalog-entity-slug` annotations
+- Auto-import catalog entities with `findOrCreateCatalog` (creates catalog if needed)
+- Handle 422 duplicate entity gracefully (log info instead of error)
+- Write back `rootly.com/catalog-entity-id` annotation on successful import
+- Pass `rootly.com/catalog-description` to catalog creation
+
+
 ## 1.2.2
 
 - Add missing await on import entity calls
