@@ -516,14 +516,15 @@ export class RootlyEntityProcessor implements CatalogProcessor {
             ROOTLY_ANNOTATION_CATALOG_ENTITY_AUTO_IMPORT
           ]
         ) {
-          const catalogId =
+          const catalogIdOrSlug =
             entity.metadata.annotations?.[ROOTLY_ANNOTATION_CATALOG_ID] ||
             entity.metadata.annotations?.[ROOTLY_ANNOTATION_CATALOG_SLUG];
-          if (catalogId) {
+          if (catalogIdOrSlug) {
             try {
+              const catalog = await rootlyClient.findOrCreateCatalog(catalogIdOrSlug);
               await rootlyClient.importCatalogEntityEntity(
                 entity as RootlyEntity,
-                catalogId,
+                catalog.data.id,
               );
             } catch (importError: unknown) {
               if (importError instanceof Error) {
