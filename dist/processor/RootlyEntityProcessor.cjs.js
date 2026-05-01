@@ -340,12 +340,13 @@ class RootlyEntityProcessor {
     } catch (error) {
       if (error instanceof Error) {
         if (error.cause.status === 404 && entity.metadata.annotations?.[backstagePluginCommon.ROOTLY_ANNOTATION_CATALOG_ENTITY_AUTO_IMPORT]) {
-          const catalogId = entity.metadata.annotations?.[backstagePluginCommon.ROOTLY_ANNOTATION_CATALOG_ID] || entity.metadata.annotations?.[backstagePluginCommon.ROOTLY_ANNOTATION_CATALOG_SLUG];
-          if (catalogId) {
+          const catalogIdOrSlug = entity.metadata.annotations?.[backstagePluginCommon.ROOTLY_ANNOTATION_CATALOG_ID] || entity.metadata.annotations?.[backstagePluginCommon.ROOTLY_ANNOTATION_CATALOG_SLUG];
+          if (catalogIdOrSlug) {
             try {
+              const catalog = await rootlyClient.findOrCreateCatalog(catalogIdOrSlug);
               await rootlyClient.importCatalogEntityEntity(
                 entity,
-                catalogId
+                catalog.data.id
               );
             } catch (importError) {
               if (importError instanceof Error) {
