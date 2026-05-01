@@ -524,12 +524,22 @@ export class RootlyEntityProcessor implements CatalogProcessor {
             try {
               const catalogDescription = entity.metadata.annotations?.[ROOTLY_ANNOTATION_CATALOG_DESCRIPTION];
               const catalog = await rootlyClient.findOrCreateCatalog(catalogIdOrSlug, catalogDescription);
-              await rootlyClient.importCatalogEntityEntity(
+              const importResponse = await rootlyClient.importCatalogEntityEntity(
                 entity as RootlyEntity,
                 catalog.data.id,
               );
+              updateAnnotations(entity, organizationId, {
+                catalogEntityId: importResponse.data.id,
+              });
             } catch (importError: unknown) {
-              if (importError instanceof Error) {
+              if (
+                importError instanceof Error &&
+                (importError.cause as any)?.status === 422
+              ) {
+                this.logger.info(
+                  `[ROOTLY PLUGIN] Catalog entity already exists, skipping import for ${entityTriplet}`,
+                );
+              } else if (importError instanceof Error) {
                 this.logger.error(
                   `[ROOTLY PLUGIN] Error Importing entity ${entityTriplet}: ${importError.message}`,
                 );
