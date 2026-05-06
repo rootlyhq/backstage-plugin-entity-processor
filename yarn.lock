@@ -2409,10 +2409,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rootly/backstage-plugin-common@npm:^1.1.1":
-  version: 1.2.0
-  resolution: "@rootly/backstage-plugin-common@npm:1.2.0"
-  checksum: 10/df05cc95952859461f60f188ee07a5d0749e94c4e0175d29e91dfdadfb1b3f310114c3557d07a545dfc86d1d59745a6033e09dfe0981963be7f155aa22a4b61d
+"@rootly/backstage-plugin-common@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "@rootly/backstage-plugin-common@npm:1.3.0"
+  checksum: 10/5232d223eb896fed66df784c317f1cc570aa3cdc76feb5f897cfeb6ffcddc40857e7fc76ec93bf6d6e0921d41b69005c855ba30a6add7bd144bcb6c334715032
   languageName: node
   linkType: hard
 
@@ -2427,7 +2427,7 @@ __metadata:
     "@backstage/plugin-catalog-common": "npm:^1.1.5"
     "@backstage/plugin-catalog-node": "npm:^1.19.0"
     "@rjsf/core": "npm:^5.24.13"
-    "@rootly/backstage-plugin-common": "npm:^1.1.1"
+    "@rootly/backstage-plugin-common": "npm:^1.3.0"
     "@types/jest": "npm:^30.0.0"
     "@types/node": "npm:^20.19.19"
     "@types/node-fetch": "npm:2.6.13"
