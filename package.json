@@ -55,7 +55,7 @@
     "@types/supertest": "^2.0.16",
     "@types/webpack-env": "1.18.8",
     "jest-mock": "30.3.0",
-    "msw": "^1.3.5",
+    "msw": "^2.13.6",
     "supertest": "^6.3.4",
     "typescript": "^5.9.3"
   },
