@@ -1,6 +1,6 @@
 # @rootly/backstage-plugin-entity-processor
 
-## 1.4.0
+## 1.3.1
 
 - Add entity kind guards to prevent wrong-kind annotations from corrupting Rootly resources
 - `rootly.com/team-id` and `rootly.com/team-slug` annotations are now only processed for `kind: Group` entities
