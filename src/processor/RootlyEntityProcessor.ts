@@ -176,7 +176,7 @@ export class RootlyEntityProcessor implements CatalogProcessor {
         config: this.config,
         organizationId: organizationId,
       });
-      if (this.serviceIdAnnotations(entity)) {
+      if (this.serviceIdAnnotations(entity) && entity.kind === 'Component') {
         return this.processRootlyService(
           rootlyClient,
           organizationId,
@@ -192,7 +192,7 @@ export class RootlyEntityProcessor implements CatalogProcessor {
           location,
           emit,
         );
-      } else if (this.teamIdAnnotations(entity)) {
+      } else if (this.teamIdAnnotations(entity) && entity.kind === 'Group') {
         return this.processRootlyTeam(
           rootlyClient,
           organizationId,

@@ -85,7 +85,7 @@ class RootlyEntityProcessor {
         config: this.config,
         organizationId
       });
-      if (this.serviceIdAnnotations(entity)) {
+      if (this.serviceIdAnnotations(entity) && entity.kind === "Component") {
         return this.processRootlyService(
           rootlyClient,
           organizationId,
@@ -101,7 +101,7 @@ class RootlyEntityProcessor {
           location,
           emit
         );
-      } else if (this.teamIdAnnotations(entity)) {
+      } else if (this.teamIdAnnotations(entity) && entity.kind === "Group") {
         return this.processRootlyTeam(
           rootlyClient,
           organizationId,
