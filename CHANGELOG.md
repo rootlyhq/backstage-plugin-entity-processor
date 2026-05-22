@@ -1,5 +1,12 @@
 # @rootly/backstage-plugin-entity-processor
 
+## 1.4.0
+
+- Add entity kind guards to prevent wrong-kind annotations from corrupting Rootly resources
+- `rootly.com/team-id` and `rootly.com/team-slug` annotations are now only processed for `kind: Group` entities
+- `rootly.com/service-id` and `rootly.com/service-slug` annotations are now only processed for `kind: Component` entities
+- Pre-existing wrong-kind annotations (e.g. a Component carrying `rootly.com/team-slug`) become silent no-ops after upgrading
+
 ## 1.3.0
 
 - Add catalog entity processing support
