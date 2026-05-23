@@ -1,10 +1,15 @@
 version: 2
-
 updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "wednesday"
+      time: "06:00"
+    assignees:
+      - "kwent"
+    labels:
+      - "dependencies"
     open-pull-requests-limit: 20
     cooldown:
       default-days: 3
@@ -15,11 +20,17 @@ updates:
         update-types:
           - "minor"
           - "patch"
+        patterns:
+          - "*"
 
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "wednesday"
+      time: "06:00"
+    assignees:
+      - "kwent"
     open-pull-requests-limit: 20
     cooldown:
       default-days: 3
