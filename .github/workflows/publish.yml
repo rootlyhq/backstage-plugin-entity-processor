@@ -17,6 +17,7 @@ jobs:
         with:
           node-version: 24
           cache: yarn
+      - run: npm install -g npm@latest
       - run: yarn install --immutable
       - run: yarn build
       - run: npm publish --provenance --access public
