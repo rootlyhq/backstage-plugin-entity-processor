@@ -2423,9 +2423,12 @@ __metadata:
   linkType: hard
 
 "@rootly/backstage-plugin-common@npm:^1.3.0":
-  version: 1.3.0
-  resolution: "@rootly/backstage-plugin-common@npm:1.3.0"
-  checksum: 10/5232d223eb896fed66df784c317f1cc570aa3cdc76feb5f897cfeb6ffcddc40857e7fc76ec93bf6d6e0921d41b69005c855ba30a6add7bd144bcb6c334715032
+  version: 1.4.0
+  resolution: "@rootly/backstage-plugin-common@npm:1.4.0"
+  dependencies:
+    "@backstage/catalog-model": "npm:^1.9.0"
+    qs: "npm:^6.15.2"
+  checksum: 10/35c92e6f9034ac3a8a7c85016cbc4645ddf2eaddb6c1705a8f66265779ff89374bafe55ee852d02729509deaf1b3d82e52b74f69fe57b8ceeace50fd5d261ec3
   languageName: node
   linkType: hard
 
@@ -12468,6 +12471,15 @@ __metadata:
   dependencies:
     side-channel: "npm:^1.1.0"
   checksum: 10/a60e49bbd51c935a8a4759e7505677b122e23bf392d6535b8fc31c1e447acba2c901235ecb192764013cd2781723dc1f61978b5fdd93cc31d7043d31cdc01974
+  languageName: node
+  linkType: hard
+
+"qs@npm:^6.15.2":
+  version: 6.15.2
+  resolution: "qs@npm:6.15.2"
+  dependencies:
+    side-channel: "npm:^1.1.0"
+  checksum: 10/7a934b2dba40654cf9878dab7c1e7ad56c6186265509727fbece67dadc38fd5d67715b61b6ef938e5a0475faeee701d18ec0a7ce420ad64367caad7f1bdb66e2
   languageName: node
   linkType: hard
 
