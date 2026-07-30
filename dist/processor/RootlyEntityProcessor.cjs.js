@@ -121,7 +121,7 @@ class RootlyEntityProcessor {
     }
     return entity;
   }
-  async processRootlyService(rootlyClient, organizationId, entity, location, emit) {
+  async processRootlyService(rootlyClient, organizationId, entity, _location, _emit) {
     const entityTriplet = catalogModel.stringifyEntityRef({
       namespace: entity.metadata.namespace,
       kind: entity.kind,
@@ -183,7 +183,7 @@ class RootlyEntityProcessor {
     }
     return entity;
   }
-  async processRootlyFunctionality(rootlyClient, organizationId, entity, location, emit) {
+  async processRootlyFunctionality(rootlyClient, organizationId, entity, _location, _emit) {
     const entityTriplet = catalogModel.stringifyEntityRef({
       namespace: entity.metadata.namespace,
       kind: entity.kind,
@@ -245,7 +245,7 @@ class RootlyEntityProcessor {
     }
     return entity;
   }
-  async processRootlyTeam(rootlyClient, organizationId, entity, location, emit) {
+  async processRootlyTeam(rootlyClient, organizationId, entity, _location, _emit) {
     const entityTriplet = catalogModel.stringifyEntityRef({
       namespace: entity.metadata.namespace,
       kind: entity.kind,
@@ -307,7 +307,7 @@ class RootlyEntityProcessor {
     }
     return entity;
   }
-  async processRootlyCatalogEntity(rootlyClient, organizationId, entity, location, emit) {
+  async processRootlyCatalogEntity(rootlyClient, organizationId, entity, _location, _emit) {
     const entityTriplet = catalogModel.stringifyEntityRef({
       namespace: entity.metadata.namespace,
       kind: entity.kind,

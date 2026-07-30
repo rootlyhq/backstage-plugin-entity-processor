@@ -8,7 +8,6 @@ import { Entity, stringifyEntityRef } from '@backstage/catalog-model';
 import {
   CatalogProcessor,
   CatalogProcessorEmit,
-  processingResult,
 } from '@backstage/plugin-catalog-node';
 import { LocationSpec } from '@backstage/plugin-catalog-common';
 import {
@@ -217,8 +216,8 @@ export class RootlyEntityProcessor implements CatalogProcessor {
     rootlyClient: RootlyApi,
     organizationId: string | undefined,
     entity: Entity,
-    location: LocationSpec,
-    emit: CatalogProcessorEmit,
+    _location: LocationSpec,
+    _emit: CatalogProcessorEmit,
   ): Promise<Entity> {
     const entityTriplet = stringifyEntityRef({
       namespace: entity.metadata.namespace,
@@ -301,8 +300,8 @@ export class RootlyEntityProcessor implements CatalogProcessor {
     rootlyClient: RootlyApi,
     organizationId: string | undefined,
     entity: Entity,
-    location: LocationSpec,
-    emit: CatalogProcessorEmit,
+    _location: LocationSpec,
+    _emit: CatalogProcessorEmit,
   ): Promise<Entity> {
     const entityTriplet = stringifyEntityRef({
       namespace: entity.metadata.namespace,
@@ -388,8 +387,8 @@ export class RootlyEntityProcessor implements CatalogProcessor {
     rootlyClient: RootlyApi,
     organizationId: string | undefined,
     entity: Entity,
-    location: LocationSpec,
-    emit: CatalogProcessorEmit,
+    _location: LocationSpec,
+    _emit: CatalogProcessorEmit,
   ): Promise<Entity> {
     const entityTriplet = stringifyEntityRef({
       namespace: entity.metadata.namespace,
@@ -470,8 +469,8 @@ export class RootlyEntityProcessor implements CatalogProcessor {
     rootlyClient: RootlyApi,
     organizationId: string | undefined,
     entity: Entity,
-    location: LocationSpec,
-    emit: CatalogProcessorEmit,
+    _location: LocationSpec,
+    _emit: CatalogProcessorEmit,
   ): Promise<Entity> {
     const entityTriplet = stringifyEntityRef({
       namespace: entity.metadata.namespace,
