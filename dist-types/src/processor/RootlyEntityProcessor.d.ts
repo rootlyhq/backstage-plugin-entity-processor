@@ -33,10 +33,10 @@ export declare class RootlyEntityProcessor implements CatalogProcessor {
     }) => Promise<RootlyApi>;
     getProcessorName(): string;
     postProcessEntity(entity: Entity, location: LocationSpec, emit: CatalogProcessorEmit): Promise<Entity>;
-    processRootlyService(rootlyClient: RootlyApi, organizationId: string | undefined, entity: Entity, location: LocationSpec, emit: CatalogProcessorEmit): Promise<Entity>;
-    processRootlyFunctionality(rootlyClient: RootlyApi, organizationId: string | undefined, entity: Entity, location: LocationSpec, emit: CatalogProcessorEmit): Promise<Entity>;
-    processRootlyTeam(rootlyClient: RootlyApi, organizationId: string | undefined, entity: Entity, location: LocationSpec, emit: CatalogProcessorEmit): Promise<Entity>;
-    processRootlyCatalogEntity(rootlyClient: RootlyApi, organizationId: string | undefined, entity: Entity, location: LocationSpec, emit: CatalogProcessorEmit): Promise<Entity>;
+    processRootlyService(rootlyClient: RootlyApi, organizationId: string | undefined, entity: Entity, _location: LocationSpec, _emit: CatalogProcessorEmit): Promise<Entity>;
+    processRootlyFunctionality(rootlyClient: RootlyApi, organizationId: string | undefined, entity: Entity, _location: LocationSpec, _emit: CatalogProcessorEmit): Promise<Entity>;
+    processRootlyTeam(rootlyClient: RootlyApi, organizationId: string | undefined, entity: Entity, _location: LocationSpec, _emit: CatalogProcessorEmit): Promise<Entity>;
+    processRootlyCatalogEntity(rootlyClient: RootlyApi, organizationId: string | undefined, entity: Entity, _location: LocationSpec, _emit: CatalogProcessorEmit): Promise<Entity>;
 }
 export type AnnotationUpdateProps = {
     serviceId?: string;

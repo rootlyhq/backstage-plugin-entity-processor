@@ -1,5 +1,12 @@
 # @rootly/backstage-plugin-entity-processor
 
+## 1.3.2
+
+- Retain compatibility with the `@rootly/backstage-plugin-common` 1.4 release line
+- Remove unused RJSF, node-fetch, Zod, MSW, and Supertest dependencies
+- Refresh vulnerable transitive dependencies and development tooling
+- Retain Backstage catalog-node v1, TypeScript 5, and Node 20 compatibility
+
 ## 1.3.1
 
 - Add entity kind guards to prevent wrong-kind annotations from corrupting Rootly resources
