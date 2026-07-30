@@ -47,11 +47,13 @@
   "devDependencies": {
     "@backstage/cli": "^0.36.4",
     "@backstage/cli-defaults": "^0.1.4",
+    "@jest/environment-jsdom-abstract": "^30.4.1",
     "@types/jest": "^30.0.0",
     "@types/node": "^20.19.19",
     "@types/webpack-env": "1.18.8",
     "jest": "^30.4.2",
     "jest-mock": "30.4.1",
+    "jsdom": "^27.1.0",
     "typescript": "^5.9.3"
   },
   "resolutions": {
