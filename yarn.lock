@@ -3210,7 +3210,7 @@ __metadata:
     "@jest/environment-jsdom-abstract": "npm:^30.4.1"
     "@rootly/backstage-plugin-common": "npm:^1.4.0"
     "@types/jest": "npm:^30.0.0"
-    "@types/node": "npm:^20.19.19"
+    "@types/node": "npm:^26.1.2"
     "@types/webpack-env": "npm:1.18.8"
     jest: "npm:^30.4.2"
     jest-mock: "npm:30.4.1"
@@ -3952,12 +3952,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^20.19.19":
-  version: 20.19.19
-  resolution: "@types/node@npm:20.19.19"
+"@types/node@npm:^26.1.2":
+  version: 26.1.2
+  resolution: "@types/node@npm:26.1.2"
   dependencies:
-    undici-types: "npm:~6.21.0"
-  checksum: 10/0230dadfe83f1aa6a5e4aad5e00a6ee3501bd539f19024b40ac198afcb4e21e3ab8b8f47c4765e5c537a1da1e53dcb41cd5549aa48efc686c9542cc9841663bb
+    undici-types: "npm:~8.3.0"
+  checksum: 10/2dd6d75b80c006deab4e381acc8cb2e3d634f10141f05fd6cadaabddd80a95f04aef7b00a574bd8fd5e08e940b899c23b91dd09a70b11a34a2762203b5eea25e
   languageName: node
   linkType: hard
 
@@ -16062,10 +16062,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici-types@npm:~6.21.0":
-  version: 6.21.0
-  resolution: "undici-types@npm:6.21.0"
-  checksum: 10/ec8f41aa4359d50f9b59fa61fe3efce3477cc681908c8f84354d8567bb3701fafdddf36ef6bff307024d3feb42c837cf6f670314ba37fc8145e219560e473d14
+"undici-types@npm:~8.3.0":
+  version: 8.3.0
+  resolution: "undici-types@npm:8.3.0"
+  checksum: 10/6681d2837ac75a75ac1cc46090aa2b8ddc7c6b8ecc295a6cdb06838752a730da3d8afeecf05e5ab7903160eafad3a8b6ffa1927e5ded260590f4d4fef18646d5
   languageName: node
   linkType: hard
 
