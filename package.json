@@ -49,7 +49,7 @@
     "@backstage/cli-defaults": "^0.1.4",
     "@jest/environment-jsdom-abstract": "^30.4.1",
     "@types/jest": "^30.0.0",
-    "@types/node": "^20.19.19",
+    "@types/node": "^26.1.2",
     "@types/webpack-env": "1.18.8",
     "jest": "^30.4.2",
     "jest-mock": "30.4.1",
