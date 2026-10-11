@@ -1,5 +1,14 @@
 # @rootly/backstage-plugin-entity-processor
 
+## 1.4.0
+
+- Upgrade to Backstage 1.55.3 (`@backstage/plugin-catalog-node` 2.x, `@backstage/backend-plugin-api` 1.10)
+- Import `catalogProcessingExtensionPoint` from the stable `@backstage/plugin-catalog-node` entry point instead of the deprecated `/alpha` export
+- The module now targets Backstage instances on the new backend system running `@backstage/plugin-catalog-node` 2.x (Backstage 1.48+); no installation changes are required
+- Remove unused `winston`, `yn`, and `@backstage/config` dependencies and the dead legacy `PluginEnvironment` type
+- Toolchain: Node 24, Yarn 4.13.0, `@types/node` 24
+- Add a CI workflow (typecheck, lint, test, build) for pull requests and pushes to `master`
+
 ## 1.3.2
 
 - Retain compatibility with the `@rootly/backstage-plugin-common` 1.4 release line
