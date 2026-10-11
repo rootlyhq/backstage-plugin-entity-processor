@@ -1,7 +1,7 @@
 'use strict';
 
 var backendPluginApi = require('@backstage/backend-plugin-api');
-var alpha = require('@backstage/plugin-catalog-node/alpha');
+var pluginCatalogNode = require('@backstage/plugin-catalog-node');
 var RootlyEntityProcessor = require('./processor/RootlyEntityProcessor.cjs.js');
 
 const catalogModuleRootlyReaderProcessor = backendPluginApi.createBackendModule({
@@ -10,14 +10,16 @@ const catalogModuleRootlyReaderProcessor = backendPluginApi.createBackendModule(
   register(env) {
     env.registerInit({
       deps: {
-        catalog: alpha.catalogProcessingExtensionPoint,
+        catalog: pluginCatalogNode.catalogProcessingExtensionPoint,
         auth: backendPluginApi.coreServices.auth,
         discovery: backendPluginApi.coreServices.discovery,
         config: backendPluginApi.coreServices.rootConfig,
         logger: backendPluginApi.coreServices.logger
       },
       async init({ catalog, auth, discovery, config, logger }) {
-        catalog.addProcessor(new RootlyEntityProcessor.RootlyEntityProcessor({ auth, discovery, config, logger }));
+        catalog.addProcessor(
+          new RootlyEntityProcessor.RootlyEntityProcessor({ auth, discovery, config, logger })
+        );
       }
     });
   }

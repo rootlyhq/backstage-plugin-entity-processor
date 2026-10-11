@@ -43,13 +43,13 @@ Because of the features provided by the plugin, an API key with full access to y
 Add the plugin to your frontend app:
 
 ```bash
-yarn add --cwd packages/app @rootly/backstage-plugin
+yarn --cwd packages/app add @rootly/backstage-plugin
 ```
 
 Add the plugin to your backend app:
 
 ```bash
-yarn add --cwd packages/backend @rootly/backstage-plugin-entity-processor
+yarn --cwd packages/backend add @rootly/backstage-plugin-entity-processor
 ```
 
 Configure the plugin in `app-config.yaml`. The proxy endpoint described below will allow the frontend
@@ -374,9 +374,9 @@ const systemPage = (
 
 ## Configuring the Entity Processor ( required )
 
-You can enable the entity processor in your Backstage instance by injecting the dependency in the backend system in `packages/backend/src/index.ts`.
+The entity processor is a catalog backend module for the [new backend system](https://backstage.io/docs/backend-system/). It requires Backstage 1.48 or later (`@backstage/plugin-catalog-node` 2.x) and is tested against Backstage 1.55. Register it in `packages/backend/src/index.ts`:
 
-```jsx
+```ts
 // packages/backend/src/index.ts
 import { createBackend } from '@backstage/backend-defaults';
 
