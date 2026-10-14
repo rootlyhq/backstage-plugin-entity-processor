@@ -3235,12 +3235,12 @@ __metadata:
   linkType: hard
 
 "@rootly/backstage-plugin-common@npm:^1.5.0":
-  version: 1.5.0
-  resolution: "@rootly/backstage-plugin-common@npm:1.5.0"
+  version: 1.6.0
+  resolution: "@rootly/backstage-plugin-common@npm:1.6.0"
   dependencies:
     "@backstage/catalog-model": "npm:^1.10.1"
     qs: "npm:^6.16.0"
-  checksum: 10/674a8e411720a3883fef02b0f64a5561cfac41a5fe8bc1b8be0e1412aa5661be8e8d553a0bf87946f0e811eb9136f26fc9835e614acddc058db1860c5cbbaad7
+  checksum: 10/4a018f733d6fb8ce57c6931e04ebd6b4371e30308e5969aa4c73e768eabf1c367c9078a5193382b76258657658939b263a5de69af70c96fbb65a1ac0d957c696
   languageName: node
   linkType: hard
 
