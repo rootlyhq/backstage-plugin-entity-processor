@@ -3280,7 +3280,7 @@ __metadata:
     "@jest/environment-jsdom-abstract": "npm:^30.5.2"
     "@rootly/backstage-plugin-common": "npm:^1.5.0"
     "@types/jest": "npm:^30.0.0"
-    "@types/node": "npm:^24.19.2"
+    "@types/node": "npm:^25.9.9"
     "@types/webpack-env": "npm:1.18.8"
     jest: "npm:^30.5.2"
     jest-mock: "npm:^30.5.2"
@@ -4069,7 +4069,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^24.19.2":
+"@types/node@npm:*":
   version: 24.19.2
   resolution: "@types/node@npm:24.19.2"
   dependencies:
@@ -4091,6 +4091,15 @@ __metadata:
   dependencies:
     undici-types: "npm:~5.26.4"
   checksum: 10/ebb85c6edcec78df926de27d828ecbeb1b3d77c165ceef95bfc26e171edbc1924245db4eb2d7d6230206fe6b1a1f7665714fe1c70739e9f5980d8ce31af6ef82
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^25.9.9":
+  version: 25.9.9
+  resolution: "@types/node@npm:25.9.9"
+  dependencies:
+    undici-types: "npm:>=7.24.0 <7.24.7"
+  checksum: 10/8accbdd15bc035db3b20bf9353dabce847a5d3dd1f3976c25e67907f4fd287b00b8163f661fe48cd6d644e30a11e1dffd67e2742233209c7b7cbc500d14d394c
   languageName: node
   linkType: hard
 
